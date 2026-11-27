@@ -27,7 +27,7 @@ function predict(x){const F=mfcc(x),f=feats(F);let v=0;for(const s of forest)if(
 /* helpers */
 const fmt=s=>Math.floor(s/60)+":"+String(Math.round(s%60)).padStart(2,"0");
 function toWav(x){const b=new ArrayBuffer(44+x.length*2),v=new DataView(b),w=(o,s)=>[...s].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));w(0,"RIFF");v.setUint32(4,36+x.length*2,true);w(8,"WAVEfmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,SR,true);v.setUint32(28,SR*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,"data");v.setUint32(40,x.length*2,true);x.forEach((s,i)=>v.setInt16(44+i*2,Math.max(-1,Math.min(1,s))*32767,true));return b}
-const V=["upload","result","how","about"];function show(v){V.forEach(k=>$("#v-"+k).classList.toggle("hide",k!==v));document.querySelectorAll("nav [data-nav]").forEach(a=>a.classList.toggle("active",a.dataset.nav===v));$("#hero").classList.toggle("hide",v!=="upload");scrollTo(0,0)}
+const V=["upload","result","how","about"];function show(v){V.forEach(k=>$("#v-"+k).classList.toggle("hide",k!==v));document.querySelectorAll("nav [data-nav]").forEach(a=>a.classList.toggle("active",a.dataset.nav===v));$("#hero").classList.toggle("hide",v!=="upload");document.body.dataset.view=v;scrollTo(0,0)}
 /* state */
 let AC,cur=null,node=null,lastF=null;  // cur={name,size,dur,x(11025 mono),buf}
 function showErr(m){const e=$("#err");e.textContent=m||"";e.classList.toggle("hide",!m)}
@@ -38,10 +38,10 @@ const ch=b.getChannelData(0),r=b.sampleRate/SR,n=Math.floor(ch.length/r),x=new F
 setFile({name:file.name,size:file.size,dur:b.duration,x})}catch(e){showErr("That file could not be read as audio.")}}
 function demo(ai){const x=gen(ai?555:777,ai);setFile({name:ai?"demo_clip_a.wav":"demo_clip_b.wav",size:x.length*2+44,dur:x.length/SR,x})}
 /* drawing */
-function wave(x){const c=$("#wave"),w=c.width=c.clientWidth*2,h=c.height=80,g=c.getContext("2d");g.clearRect(0,0,w,h);g.fillStyle=css("--accent");const bars=Math.floor(w/8);
+function wave(x){const c=$("#wave"),w=c.width=c.clientWidth*2,h=c.height=80,g=c.getContext("2d");g.clearRect(0,0,w,h);g.fillStyle=css("--ink");const bars=Math.floor(w/8);
 for(let i=0;i<bars;i++){const s=Math.floor(i/bars*x.length);let m=0;for(let k=0;k<400&&s+k<x.length;k+=8)m=Math.max(m,Math.abs(x[s+k]));const bh=Math.max(4,m*h*1.6);g.fillRect(i*8,(h-bh)/2,3,bh)}}
 function heat(F){const c=$("#mfcc"),w=c.width=c.clientWidth*2,h=c.height=140,g=c.getContext("2d"),T=F.length,dark=isDark();
-for(let k=0;k<NC;k++){const col=F.map(r=>r[k]),mn=Math.min(...col),mx=Math.max(...col);col.forEach((v,t)=>{const u=(v-mn)/(mx-mn||1);g.fillStyle=`hsl(${255+u*70},${65+u*20}%,${dark?14+u*50:95-u*50}%)`;g.fillRect(t*w/T,k*h/NC,w/T+1,h/NC+1)})}}
+for(let k=0;k<NC;k++){const col=F.map(r=>r[k]),mn=Math.min(...col),mx=Math.max(...col);col.forEach((v,t)=>{const u=(v-mn)/(mx-mn||1);g.fillStyle=`hsl(${75-u*55},${dark?55+u*35:80+u*15}%,${dark?12+u*50:93-u*50}%)`;g.fillRect(t*w/T,k*h/NC,w/T+1,h/NC+1)})}}
 function stop(){if(node){try{node.stop()}catch(e){}node=null}$("#play").textContent="▶"}
 /* actions */
 $("#analyze").onclick=async()=>{const b=$("#analyze");b.disabled=true;b.querySelector("span").textContent="Analyzing…";await sleep(700);const r=predict(cur.x),ai=r.p>=.5,top=Math.round(Math.max(r.p,1-r.p)*100);

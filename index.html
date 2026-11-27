@@ -6,94 +6,109 @@
 <meta name="description" content="Web-based AI-generated music detection using MFCC and Random Forest. A decision-support tool for first-year PUP students.">
 <title>AI Music Detector | MFCC + Random Forest</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235b4bf0'/%3E%3Cpath d='M7 16v0M11 11v10M16 7v18M21 11v10M25 14v4' stroke='white' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/InterTight-800.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body data-view="upload">
+<div class="bar"><span>AI Music Detector</span><span>2026</span></div>
 <header>
-<button class="logo" id="home"><span class="mark"><svg width="20" height="20" viewBox="0 0 32 32" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M5 16v0M10 10v12M16 5v22M22 10v12M27 14v4"/></svg></span><span>AI Music Detector<small>MFCC + Random Forest</small></span></button>
+<button class="logo" id="home"><span class="mark"><svg width="18" height="18" viewBox="0 0 32 32" fill="none" stroke="#16160f" stroke-width="4" stroke-linecap="round"><path d="M5 16v0M10 10v12M16 5v22M22 10v12M27 14v4"/></svg></span>AI Music <em>Detector</em></button>
 <nav><a id="nHow" data-nav="how" tabindex="0">How it works</a><a id="nAbout" data-nav="about" tabindex="0">About the study</a><button class="btn sm" id="theme" type="button"></button></nav>
 </header>
 <main>
 
-<div class="hero" id="hero">
-<span class="badge">Research prototype</span>
-<h1>Is this track <em>AI-generated?</em></h1>
-<p class="lead">Upload a short clip. The system analyzes its MFCC features and gives you a result to support your own decision.</p>
+<div id="hero">
+<div class="hero">
+<span class="fold f1"></span><span class="fold f2"></span><span class="fold f3"></span><span class="fold f4"></span><span class="cursor"></span>
+<span class="kick">Decision-support tool</span>
+<h1>Is this track<span class="s">AI-generated?</span></h1>
+<p>Upload a short clip. The system reads its MFCC features and gives you a result to help your own decision.</p>
+</div>
 </div>
 
 <section id="v-upload">
-<div class="card narrow">
+<div class="win upwin"><div class="tb"><i></i><i></i><i></i><span>upload.clip</span></div><div class="body">
 <div class="drop" id="drop">
-<div class="up"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg></div>
+<div class="up"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#16160f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V6M7 11l5-5 5 5"/></svg></div>
 <b>Drag and drop an audio clip here</b>
-<div class="small" style="margin:8px 0 12px">or</div>
+<div class="small" style="margin:8px 0 14px">or</div>
 <button class="btn pri" id="choose">Choose file</button>
 <input type="file" id="file" accept=".mp3,.wav,audio/mpeg,audio/wav,audio/x-wav" hidden>
-<small>MP3 or WAV, up to 10 minutes, 30 MB max</small>
+<small>MP3 or WAV · up to 10 minutes · 30 MB max</small>
 </div>
 <div class="file hide" id="fileRow"><div><b id="fName"></b><span id="fDur"></span><span id="fSize">·</span></div><button class="btn sm" id="remove">Remove</button></div>
 <div class="err hide" id="err"></div>
 <button class="btn pri full" id="analyze" style="margin-top:20px" disabled><span>Analyze clip</span></button>
 <p class="note">The result is a guide only. The final decision is yours.</p>
 <p class="note" style="margin-top:4px">No audio handy? <button class="demo" id="demoAI">Load demo clip A</button> · <button class="demo" id="demoHu">Load demo clip B</button></p>
-</div>
-<div class="features">
-<div class="feat"><i>↑</i><b>Upload a clip</b><p>MP3 or WAV, processed in your browser.</p></div>
-<div class="feat"><i>≋</i><b>MFCC analysis</b><p>Spectral features describe the sound.</p></div>
-<div class="feat"><i>⑂</i><b>Random Forest</b><p>A vote-based classifier gives a confidence score.</p></div>
-</div>
+</div></div>
+
+<div class="stats"><div class="wrap">
+<div><b>MFCC</b><span>Spectral features</span></div>
+<div><b>Random Forest</b><span>Vote-based classifier</span></div>
+<div><b>0 stored</b><span>Audio kept after analysis</span></div>
+</div></div>
+<div class="ticker"><div>Upload a clip &#10022; MFCC + Random Forest &#10022; Guide only, you decide &#10022; Upload a clip &#10022; MFCC + Random Forest &#10022; Guide only, you decide &#10022; Upload a clip &#10022; MFCC + Random Forest &#10022; Guide only, you decide &#10022; Upload a clip &#10022; MFCC + Random Forest &#10022; Guide only, you decide &#10022;</div></div>
+<div class="wrap"><div class="cards">
+<div class="card c1"><span class="n">01</span><h3>Upload</h3><p>Drop in an MP3 or WAV clip. Nothing leaves the page.</p></div>
+<div class="card c2"><span class="n">02</span><h3>Analyze</h3><p>The clip becomes MFCCs, a fingerprint of its sound.</p></div>
+<div class="card c3"><span class="n">03</span><h3>Decide</h3><p>See the result and confidence, then use your own judgment.</p></div>
+</div></div>
 </section>
 
-<section id="v-result" class="hide">
-<h2>Analysis result</h2>
+<section id="v-result" class="hide"><div class="page">
+<h2>Analysis <span class="s">result</span></h2>
+<p class="lead">Here is what the detector found in your clip.</p>
 <div class="player">
-<button class="play" id="play" aria-label="Play">▶</button>
+<button class="play" id="play" aria-label="Play">&#9654;</button>
 <div class="pl"><b id="rName"></b><canvas id="wave" height="40"></canvas></div>
 <span class="dur" id="rDur"></span>
 </div>
 <div class="res">
-<div class="box">
-<div class="cap">System result</div>
+<div class="win"><div class="tb"><i></i><i></i><i></i><span>system result</span></div><div class="body">
 <div class="vrow"><span id="vIcon"></span><div class="verdict" id="verdict"></div></div>
 <div>Confidence: <b id="conf"></b></div>
 <div class="meter"><i id="meter" style="width:0"></i></div>
 <div class="small" id="other"></div>
-</div>
-<div class="box viz">
-<div class="cap">MFCC visualization</div>
+</div></div>
+<div class="win"><div class="tb"><i></i><i></i><i></i><span>mfcc heatmap</span></div><div class="body">
 <span class="small">Heatmap of the clip's MFCCs (optional, supports AI literacy)</span>
-<canvas id="mfcc" height="70" style="border-radius:12px;margin-top:8px"></canvas>
-</div>
+<canvas id="mfcc" height="70" style="border:2px solid var(--line);border-radius:10px;margin-top:12px"></canvas>
+</div></div>
 </div>
 <div class="disclaimer">This result is a guide. It can be wrong, especially for new AI generators or edited audio. Use it together with your own judgment.</div>
 <div class="actions"><button class="btn pri" id="another">Analyze another clip</button><button class="btn" id="back">Back</button></div>
-</section>
+</div></section>
 
-<section id="v-how" class="hide narrow">
-<h2>How it works</h2>
-<p class="lead" style="margin-left:0">Four steps, from upload to result.</p>
-<div class="steps">
-<div class="step"><div><b>Upload</b><p>You submit a short MP3 or WAV clip through the web interface.</p></div></div>
-<div class="step"><div><b>Preprocess</b><p>The audio is converted to a standard format and length.</p></div></div>
-<div class="step"><div><b>MFCC extraction</b><p>The clip is turned into Mel-Frequency Cepstral Coefficients that describe its spectral character.</p></div></div>
-<div class="step"><div><b>Random Forest</b><p>A trained classifier votes AI-generated or human-composed, and the share of votes is shown as a percentage.</p></div></div>
-</div>
-<div class="actions"><button class="btn" data-go="upload">Back</button></div>
-</section>
+<section id="v-how" class="hide"><div class="page">
+<h2>How it <span class="s">works</span></h2>
+<p class="lead">Four steps, from upload to result.</p>
+<div class="win how-win"><div class="tb"><i></i><i></i><i></i><span>steps.txt</span></div><div class="body">
+<ul class="list">
+<li><div><b>Upload</b><span>You submit a short MP3 or WAV clip through the web interface.</span></div></li>
+<li><div><b>Preprocess</b><span>The audio is converted to a standard format and length.</span></div></li>
+<li><div><b>MFCC extraction</b><span>The clip is turned into Mel-Frequency Cepstral Coefficients that describe its spectral character.</span></div></li>
+<li><div><b>Random Forest</b><span>A trained classifier votes AI-generated or human-composed, and the share of votes is shown as a percentage.</span></div></li>
+</ul></div></div>
+<div class="actions" style="justify-content:flex-end;max-width:640px;margin-left:auto"><button class="btn" data-go="upload">Back</button></div>
+</div></section>
 
-<section id="v-about" class="hide narrow">
-<h2>About the study</h2>
-<p class="lead" style="margin-left:0">Web-Based AI-Generated Music Detection Using MFCC and Random Forest Among First-Year PUP Students</p>
+<section id="v-about" class="hide"><div class="page">
+<h2>About the <span class="s">study</span></h2>
+<p class="lead">Web-Based AI-Generated Music Detection Using MFCC and Random Forest Among First-Year PUP Students</p>
 <div class="facts">
-<div class="fact"><b>PUP-QC</b><span>Polytechnic University of the Philippines, Quezon City Campus</span></div>
-<div class="fact"><b>BSIT</b><span>Undergraduate thesis, A.Y. 2025–2026</span></div>
-<div class="fact"><b>MFCC + RF</b><span>Audio features classified by a Random Forest</span></div>
+<div class="fact" style="background:#fff2a8"><b>PUP-QC</b><span>Polytechnic University of the Philippines, Quezon City Campus</span></div>
+<div class="fact" style="background:#ffc9dc"><b>BSIT</b><span>Undergraduate thesis, A.Y. 2025–2026</span></div>
+<div class="fact" style="background:#bfe3ff"><b>MFCC + RF</b><span>Audio features classified by a Random Forest</span></div>
 </div>
-<p style="font-size:15px">This tool is part of a thesis at the Polytechnic University of the Philippines, Quezon City Campus. It studies whether a detection aid helps first-year students tell AI-generated music from human-composed music. The system gives decision support only; you make the final call.</p>
+<p class="about-copy">This tool is part of a thesis at the Polytechnic University of the Philippines, Quezon City Campus. It studies whether a detection aid helps first-year students tell AI-generated music from human-composed music. The system gives decision support only; you make the final call.</p>
 <div class="actions"><button class="btn" data-go="upload">Back</button></div>
-</section>
+</div></section>
 </main>
-<footer><span>Uploaded audio is processed for this study only and is not stored.</span><span>PUP Quezon City · BSIT Thesis</span></footer>
+<footer>
+<div class="big">AI Music <em>Detector.</em></div>
+<div class="row"><span>Uploaded audio is processed for this study only and is not stored.</span><span>PUP Quezon City · BSIT Thesis · 2026</span></div>
+</footer>
 <script src="js/app.js"></script>
 </body>
 </html>
